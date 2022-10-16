@@ -1,0 +1,23 @@
+{% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<form action="{{ path('bks_login') }}" method="post" class="w-100 p-4 p-md-5 rounded-3 bg-secondary text-black">
+    <div class="form-floating mb-3">
+        <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="name@example.com" required />
+        <label for="username">{% trans %}form.login.username{% endtrans %}</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" id="password" name="_password" required class="form-control" placeholder="Pa$$w0rd" />
+        <label for="password">{% trans %}form.login.password{% endtrans %}</label>
+    </div>
+    <div class="checkbox mb-3">
+        <label>
+        <input type="checkbox" name="_remember_me"> {% trans %}form.login.remember{% endtrans %}
+        </label>
+    </div>
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+    <button type="submit" class="w-100 btn btn-lg btn-primary">{% trans %}form.login.send{% endtrans %}</button>
+</form>

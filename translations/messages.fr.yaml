@@ -1,5 +1,10 @@
 app.name: "BiblioGest'"
 app.description: "BiblioGest' est une application de gestion de bibliothèques personnelles, avec suivi des prêts."
-app.slogan: "Gardez un œil sur vos bibliothèques"
+app.slogan: 'Gardez un œil sur vos bibliothèques'
 app.slogan.details: "Parce que l'on peut vite se perdre dans nos bibliothèque, parce que l'on peut facilement perdre de vue un livre&hellip;"
 page.home.title: Accueil
+form.login.username: "Nom d'utilisateur"
+form.login.password: 'Mot de passe'
+form.login.remember: 'Se souvenir de moi'
+form.login.send: 'Me connecter'
+auth.login.title: Connexion

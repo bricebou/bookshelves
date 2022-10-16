@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}auth.login.title{% endtrans %}{% endblock %}
+
+{% block body %}
+<div class="container-lg col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+    <div class="">
+        {% include "forms/login.html.twig" %}
+    </div>
+</div>
+{% endblock %}
+
