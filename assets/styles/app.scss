@@ -12,6 +12,12 @@ $dark: #1b365d;
 // 4. Include any default map overrides here
 $navbar-brand-font-size: $font-size-base * 2.5;
 
+$extended-font-size-utilities: (
+  "3_4": 0.75 * $font-size-base,
+  "7_8": 0.875 * $font-size-base
+);
+$font-sizes: map-merge($font-sizes, $extended-font-size-utilities);
+
 // 5. Include remainder of required parts
 @import "~bootstrap/scss/maps";
 @import "~bootstrap/scss/mixins";

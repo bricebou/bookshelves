@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container col-xxl-8">
+    <div class="row flex-lg-row-reverse justify-content-center align-items-center g-5 py-5">
+        <div class="col-12 col-sm-10 col-lg-6">
+            <img src="{{ asset('images/ccchaos.svg') }}" class="d-block ms-lg-auto img-fluid" alt="Forme abstraite décorative" loading="lazy" width="500" height="500">
+        </div>
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">{% trans %}app.slogan{% endtrans %}</h1>
+            <p class="lead mb-4">{% trans %}app.slogan.details{% endtrans %}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
