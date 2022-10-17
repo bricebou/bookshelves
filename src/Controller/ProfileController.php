@@ -13,6 +13,8 @@ class ProfileController extends AbstractController
     #[Route('/{username}', name: 'view')]
     public function view(User $user): Response
     {
+        $this->denyAccessUnlessGranted('view', $user);
+
         return $this->render('profile/view.html.twig', [
             'user' => $user,
         ]);
