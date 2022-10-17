@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans with {'%name%': user.username} %}page.profile.title.%name%{% endtrans %}{% endblock %}
+
+{% block body %}
+    <div class="container-lg">
+        <h1>{% trans with {'%name%': user.username} %}page.profile.title.%name%{% endtrans %}</h1>
+    </div>
+{% endblock %}

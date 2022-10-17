@@ -9,3 +9,4 @@ form.login.remember: 'Se souvenir de moi'
 form.login.send: 'Me connecter'
 auth.login.title: Connexion
 auth.logout.title: Déconnexion
+page.profile.title.%name%: '%name% ~ Profil'
