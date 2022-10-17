@@ -32,3 +32,20 @@
 .logo-white {
     background-color: $white;
 }
+
+/* HEADER USER */
+.user .user__icon {
+    display: inline-block;
+    height: 1.5rem;
+    width: 1.5rem;
+    background: $white;
+    border-radius: 50%;
+}
+
+.user-authenticated .user__icon {
+    mask: url(../images/user-solid.svg) no-repeat center;
+}
+
+.user-anonymous .user__icon {
+    mask: url(../images/user-regular.svg) no-repeat center;
+}

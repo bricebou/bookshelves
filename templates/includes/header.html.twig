@@ -5,6 +5,20 @@
                 <span class="logo logo-7 logo-white me-2"></span>
                 {% trans %}app.name{% endtrans %}
             </a>
+
+            <div class="d-flex flex-row align-items-center gap-2 user{% if is_granted('IS_AUTHENTICATED_FULLY') %} user-authenticated{% else %} user-anonymous{% endif %}">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <div class="d-flex flex-column text-end">
+                        <span class="text-uppercase fw-bold fs-7_8 user__username">{{ app.user.username }}</span>
+                        <span class="user__actions">
+                           <a class="text-secondary text-uppercase fw-bold fs-3_4" href="{{ path('bks_logout') }}">{% trans %}auth.logout.title{% endtrans %}</a>
+                        </span>
+                    </div>
+                {% else %}
+                    <a class="text-secondary text-uppercase fw-bold fs-3_4" href="{{ path('bks_login') }}">{% trans %}auth.login.title{% endtrans %}</a>
+                {% endif %}
+                <span class="user__icon"></span>
+            </div>
         </div>
     </nav>
 </header>
