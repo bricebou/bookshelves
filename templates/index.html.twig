@@ -11,7 +11,7 @@
             <p class="lead mb-4">{% trans %}app.slogan.details{% endtrans %}</p>
 
             {% if not app.user %}
-                <div class="w-75">
+                <div class="w-75 mx-auto">
                     {% include "forms/login.html.twig" %}
                 </div>
             {% endif %}
