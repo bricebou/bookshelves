@@ -6,10 +6,18 @@
     <div class="container-lg">
         <h1>{{ bookshelf.name }}</h1>
 
-        <ul>
+        <div class="row">
             {% for book in bookshelf.books %}
-                <li>{{ book.title }}</li>
+                <div class="col-md-6 col-lg-4">
+                    <h2 class="display-6"><a href="{{ path('bks_book_view', {ulid: book.ulid}) }}">{{ book.title }}</a></h2>
+                    <p>
+                        {% for author in book.authors %}
+                            <span>{{ author.name }}{% if not loop.last %}, {% endif %}</span>
+                        {% endfor %}
+                    </p>
+                    <p class="text-muted">{{ book.publisher.name }} {{ not book.publicationDate ?: ', ' ~ book.publicationDate }}</p>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     </div>
 {% endblock %}

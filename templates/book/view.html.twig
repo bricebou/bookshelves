@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block body %}
+
+    <div class="container-lg">
+        <h1 class="fst-italic display-1">{{ book.title }}</h1>
+
+        <p>
+            {% for author in book.authors %}
+                {{ author.name }}
+            {% endfor %} | {{ book.publisher.name }}{{ not book.publicationDate ?: ', ' ~ book.publicationDate}} | {{ not book.pages ?: book.pages ~ ' p.' }}
+        </p>
+
+        <div>
+            {{ book.description | nl2br }}
+        </div>
+    </div>
+
+{% endblock %}
