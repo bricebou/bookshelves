@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ bookshelf.name }}{% endblock %}
+
+{% block body %}
+    <div class="container-lg">
+        <h1>{{ bookshelf.name }}</h1>
+
+        <ul>
+            {% for book in bookshelf.books %}
+                <li>{{ book.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -5,5 +5,11 @@
 {% block body %}
     <div class="container-lg">
         <h1>{% trans with {'%name%': user.username} %}page.profile.title.%name%{% endtrans %}</h1>
+
+        <h2>{% trans %}bookshelves.public{% endtrans %}</h2>
+
+        {% for bookshelf in user.bookshelves %}
+            <h3><a href="{{ path('bks_bookshelf_view', {ulid: bookshelf.ulid}) }}">{{ bookshelf.name }}</a></h3>
+        {% endfor %}
     </div>
 {% endblock %}

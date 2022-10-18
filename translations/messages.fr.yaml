@@ -11,3 +11,4 @@ auth.login.title: Connexion
 auth.logout.title: Déconnexion
 page.profile.title: Profil
 page.profile.title.%name%: 'Profil de %name%'
+bookshelves.public: Bibliothèques publiques
