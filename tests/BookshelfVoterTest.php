@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use App\Entity\Book;
 use App\Entity\Bookshelf;
 use App\Repository\BookRepository;
 use App\Repository\BookshelfRepository;
@@ -93,6 +94,105 @@ class BookshelfVoterTest extends WebTestCase
         $crawler = $this->client->request('GET', '/bookshelf/' . $bookshelf->getUlid());
 
         $this->assertResponseStatusCodeSame(403);
+    }
 
+    public function testBookFromPublicBookshelf()
+    {
+        $bookshelf = $this->bookshelfRepository->findOneBy(['public' => true]);
+
+        /**
+         * @var BookRepository
+         */
+        $bookRepository = $this->getContainer()->get(BookRepository::class);
+
+        /**
+         * @var Book
+         */
+        $book = $bookRepository->findOneBy(['bookshelf' => $bookshelf]);
+
+        $crawler = $this->client->request('GET', '/book/' . $book->getUlid());
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextSame('h1', $book->getTitle());
+    }
+
+    public function testBookFromPrivateBookshelf() {
+        $bookshelf = $this->bookshelfRepository->findOneBy(['public' => false]);
+
+        /**
+         * @var BookRepository
+         */
+        $bookRepository = $this->getContainer()->get(BookRepository::class);
+
+        /**
+         * @var Book
+         */
+        $book = $bookRepository->findOneBy(['bookshelf' => $bookshelf]);
+
+        $crawler = $this->client->request('GET', '/book/' . $book->getUlid());
+
+        $loginRoute = static::getContainer()->get('router')->generate('bks_login', array(), false);
+
+        $this->assertResponseRedirects($loginRoute);
+    }
+
+    public function testBookFromPrivateBookshelfWithUserNotOwnerAuthenticated()
+    {
+        /**
+         * @var BookRepository
+         */
+        $bookRepository = $this->getContainer()->get(BookRepository::class);
+
+        /**
+         * @var UserRepository
+         */
+        $userRepository = $this->getContainer()->get(UserRepository::class);
+
+        /**
+         * @var User
+         */
+        $userLoggedIn = $userRepository->findOneBy(['username' => 'obi']);
+
+        /**
+         * @var User
+         */
+        $owner = $userRepository->findOneBy(['username' => 'sophie']);
+
+        $bookshelf = $this->bookshelfRepository->findOneBy(['public' => false, 'owner' => $owner]);
+
+        $book = $bookRepository->findOneBy(['bookshelf' => $bookshelf]);
+
+        $this->client->loginUser($userLoggedIn);
+        $crawer = $this->client->request('GET', '/book/' . $book->getUlid());
+
+        $this->assertResponseStatusCodeSame(403);
+    }
+
+    public function testBookFromPrivateBookshelfWithOwnerAuthenticated()
+    {
+        /**
+         * @var BookRepository
+         */
+        $bookRepository = $this->getContainer()->get(BookRepository::class);
+
+        /**
+         * @var UserRepository
+         */
+        $userRepository = $this->getContainer()->get(UserRepository::class);
+
+        /**
+         * @var User
+         */
+        $owner = $userRepository->findOneBy(['username' => 'sophie']);
+
+        $bookshelf = $this->bookshelfRepository->findOneBy(['public' => false, 'owner' => $owner]);
+
+        $book = $bookRepository->findOneBy(['bookshelf' => $bookshelf]);
+
+        $this->client->loginUser($owner);
+        $crawer = $this->client->request('GET', '/book/' . $book->getUlid());
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextSame('h1', $book->getTitle());
     }
 }
