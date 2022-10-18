@@ -13,6 +13,8 @@ class BookshelfController extends AbstractController
     #[Route('/{ulid}', name: 'view')]
     public function view(Bookshelf $bookshelf): Response
     {
+        $this->denyAccessUnlessGranted('view', $bookshelf);
+
         return $this->render('bookshelf/view.html.twig', [
             'bookshelf' => $bookshelf,
         ]);
