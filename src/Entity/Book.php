@@ -46,6 +46,10 @@ class Book
     #[ORM\Column(type: 'ulid')]
     private ?Ulid $ulid = null;
 
+    #[ORM\ManyToOne(inversedBy: 'books')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Bookshelf $bookshelf = null;
+
     public function __construct()
     {
         $this->authors = new ArrayCollection();
@@ -173,5 +177,17 @@ class Book
     public function setUlid(): void
     {
         $this->ulid = new Ulid();
+    }
+
+    public function getBookshelf(): ?Bookshelf
+    {
+        return $this->bookshelf;
+    }
+
+    public function setBookshelf(?Bookshelf $bookshelf): self
+    {
+        $this->bookshelf = $bookshelf;
+
+        return $this;
     }
 }
