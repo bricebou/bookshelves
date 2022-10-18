@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -38,6 +40,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $public = null;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Bookshelf::class)]
+    private Collection $bookshelves;
+
+    public function __construct()
+    {
+        $this->bookshelves = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -144,5 +154,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $slugger = new AsciiSlugger();
         $this->slug = $slugger->slug($this->getUsername())->lower();
+    }
+
+    /**
+     * @return Collection<int, Bookshelf>
+     */
+    public function getBookshelves(): Collection
+    {
+        return $this->bookshelves;
+    }
+
+    public function addBookshelf(Bookshelf $bookshelf): self
+    {
+        if (!$this->bookshelves->contains($bookshelf)) {
+            $this->bookshelves->add($bookshelf);
+            $bookshelf->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookshelf(Bookshelf $bookshelf): self
+    {
+        if ($this->bookshelves->removeElement($bookshelf)) {
+            // set the owning side to null (unless already changed)
+            if ($bookshelf->getOwner() === $this) {
+                $bookshelf->setOwner(null);
+            }
+        }
+
+        return $this;
     }
 }
