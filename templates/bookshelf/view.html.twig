@@ -7,11 +7,13 @@
         <h1>{{ bookshelf.name }}</h1>
 
         {% if is_granted('edit', bookshelf) %}
-            <a href="{{ path('bks_bookshelf_edit', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">crud.edit</a>
+            <div class="bookshelf-actions d-flex gap-3">
+                <a href="{{ path('bks_bookshelf_edit', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">{% trans %}bookshelf.edit{% endtrans %}</a>
 
-            <a href="{{ path('bks_bookshelf_edit_ownership', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">crud.transfer.ownership</a>
+                <a href="{{ path('bks_bookshelf_edit_ownership', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">{% trans %}bookshelf.edit.ownership{% endtrans %}</a>
 
-             {{ include('forms/delete.html.twig', {route: path('bks_bookshelf_delete', {ulid: bookshelf.ulid}), csrf_prefix: 'bookshelf', csrf: bookshelf.ulid}) }}
+                {{ include('forms/delete.html.twig', {route: path('bks_bookshelf_delete', {ulid: bookshelf.ulid}), csrf_prefix: 'bookshelf', csrf: bookshelf.ulid}) }}
+            </div>
         {% endif %}
 
         <div class="row">

@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Bookshelf{% endblock %}
+{% block title %}{% trans %}bookshelf.create{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Create new Bookshelf</h1>
+    <div class="container-lg">
+        <h1>{% trans %}bookshelf.create{% endtrans %}</h1>
 
-    {% set buttonText = 'bookshelf.form.create.submit' %}
-    {{ include("forms/edit.html.twig", {'button_label': buttonText | trans | raw}) }}
-
+        <div class="row">
+            <div class="col-8">
+                {% set buttonText = 'bookshelf.form.create.submit' %}
+                {{ include("forms/edit.html.twig", {'button_label': buttonText | trans | raw}) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

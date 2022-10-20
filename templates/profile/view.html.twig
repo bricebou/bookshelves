@@ -6,16 +6,36 @@
     <div class="container-lg">
         <h1>{% trans with {'%name%': user.username} %}page.profile.title.%name%{% endtrans %}</h1>
 
-        <h2>{% trans %}bookshelves.public{% endtrans %}</h2>
+        <div class="d-flex">
+            <div class="col-8">
+                {% for bookshelf in user.bookshelves %}
+                    <div class="bookshelf mb-4">
+                    {% if is_granted('view', bookshelf) %}
+                        <h2><a href="{{ path('bks_bookshelf_view', {ulid: bookshelf.ulid}) }}">{{ bookshelf.name }}</a></h2>
 
-        {% if is_granted('edit', user) %}
-            <a href="{{ path('bks_bookshelf_create') }}" class="btn btn-primary">form.bookshelf.create</a>
-        {% endif %}
+                        <p>{{ bookshelf.books.count }} {% trans %}books{% endtrans %}</p>
 
-        {% for bookshelf in user.bookshelves %}
-            {% if is_granted('view', bookshelf) %}
-                <h3><a href="{{ path('bks_bookshelf_view', {ulid: bookshelf.ulid}) }}">{{ bookshelf.name }}</a></h3>
-            {% endif %}
-        {% endfor %}
+                        {% if bookshelf.description %}<div class="bookshelf-description mb-3">{{ bookshelf.description }}</div>{% endif %}
+
+                        {% if is_granted('edit', bookshelf) %}
+                            <div class="bookshelf-actions d-flex gap-3">
+                                <a href="{{ path('bks_bookshelf_edit', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">{% trans %}bookshelf.edit{% endtrans %}</a>
+
+                                <a href="{{ path('bks_bookshelf_edit_ownership', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">{% trans %}bookshelf.edit.ownership{% endtrans %}</a>
+
+                                {{ include('forms/delete.html.twig', {route: path('bks_bookshelf_delete', {ulid: bookshelf.ulid}), csrf_prefix: 'bookshelf', csrf: bookshelf.ulid}) }}
+                            </div>
+                        {% endif %}
+
+                    {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-3 offset-1 text-end">
+                {% if is_granted('edit', user) %}
+                    <a href="{{ path('bks_bookshelf_create') }}" class="btn btn-primary">{% trans %}bookshelf.create{% endtrans %}</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock %}
