@@ -105,7 +105,7 @@ class BookshelfController extends AbstractController
         Bookshelf $bookshelf,
         BookshelfRepository $bookshelfRepository
     ): Response {
-        if ($this->isCsrfTokenValid('delete' . $bookshelf->getUlid(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('deletebookshelf' . $bookshelf->getUlid(), $request->request->get('_token'))) {
             $bookshelfRepository->remove($bookshelf, true);
         }
 

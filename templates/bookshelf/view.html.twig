@@ -11,7 +11,7 @@
 
             <a href="{{ path('bks_bookshelf_edit_ownership', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">crud.transfer.ownership</a>
 
-             {{ include('forms/delete.html.twig', {route: path('bks_bookshelf_delete', {ulid: bookshelf.ulid}), csrf: bookshelf.ulid}) }}
+             {{ include('forms/delete.html.twig', {route: path('bks_bookshelf_delete', {ulid: bookshelf.ulid}), csrf_prefix: 'bookshelf', csrf: bookshelf.ulid}) }}
         {% endif %}
 
         <div class="row">
