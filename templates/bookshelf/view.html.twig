@@ -6,6 +6,14 @@
     <div class="container-lg">
         <h1>{{ bookshelf.name }}</h1>
 
+        {% if is_granted('edit', bookshelf) %}
+            <a href="{{ path('bks_bookshelf_edit', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">crud.edit</a>
+
+            <a href="{{ path('bks_bookshelf_edit_ownership', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">crud.transfer.ownership</a>
+
+             {{ include('forms/delete.html.twig', {route: path('bks_bookshelf_delete', {ulid: bookshelf.ulid}), csrf: bookshelf.ulid}) }}
+        {% endif %}
+
         <div class="row">
             {% for book in bookshelf.books %}
                 <div class="col-md-6 col-lg-4">

@@ -8,6 +8,10 @@
 
         <h2>{% trans %}bookshelves.public{% endtrans %}</h2>
 
+        {% if is_granted('edit', user) %}
+            <a href="{{ path('bks_bookshelf_create') }}" class="btn btn-primary">form.bookshelf.create</a>
+        {% endif %}
+
         {% for bookshelf in user.bookshelves %}
             {% if is_granted('view', bookshelf) %}
                 <h3><a href="{{ path('bks_bookshelf_view', {ulid: bookshelf.ulid}) }}">{{ bookshelf.name }}</a></h3>

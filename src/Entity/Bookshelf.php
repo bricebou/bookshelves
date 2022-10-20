@@ -34,7 +34,7 @@ class Bookshelf
     #[ORM\Column]
     private ?bool $public = null;
 
-    #[ORM\OneToMany(mappedBy: 'bookshelf', targetEntity: Book::class)]
+    #[ORM\OneToMany(mappedBy: 'bookshelf', targetEntity: Book::class, cascade: ['remove'])]
     private Collection $books;
 
     public function __construct()
