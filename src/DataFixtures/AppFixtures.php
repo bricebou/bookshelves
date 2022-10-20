@@ -91,7 +91,9 @@ class AppFixtures extends Fixture
             $bookshelf->setName($faker->words(rand(2, 4), true))
                 ->setDescription($faker->paragraphs(3, true))
                 ->setPublic($faker->boolean())
-                ->setOwner($this->userRepository->findOneBy(['username' => array_rand(['sophie' => 'sophie', 'brice' => 'brice', 'gamora' => 'gamora'])]));
+                ->setOwner($this->userRepository->findOneBy([
+                    'username' => array_rand(['sophie' => 'sophie', 'brice' => 'brice', 'gamora' => 'gamora'])
+                ]));
             $bookshelves[$i] = $bookshelf;
             $manager->persist($bookshelf);
         }
@@ -99,11 +101,11 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 260; $i++) {
             $book = new Book();
             $book->setTitle($faker->sentence())
-                ->setDescription($faker->paragraphs(rand(2,5), true))
+                ->setDescription($faker->paragraphs(rand(2, 5), true))
                 ->setIsbn($faker->isbn13())
                 ->setPages(rand(120, 1200))
                 ->setPublicationDate($faker->date('Y'))
-                ->setPublisher($publishers[rand(1,25)])
+                ->setPublisher($publishers[rand(1, 25)])
                 ->addAuthor($authors[rand(1, 25)])
                 ->setBookshelf($bookshelves[rand(1, 12)]);
             $manager->persist($book);
