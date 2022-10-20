@@ -11,4 +11,18 @@ auth.login.title: Connexion
 auth.logout.title: Déconnexion
 page.profile.title: Profil
 page.profile.title.%name%: 'Profil de %name%'
-bookshelves.public: Bibliothèques publiques
+bookshelf: la bibliothèque
+bookshelf.create: Créer une bibliothèque
+bookshelf.edit: Modifier la bibliothèque
+bookshelf.edit.name: Nom
+bookshelf.edit.description: Description
+bookshelf.edit.public: Publique ?
+bookshelf.edit.public.help: "Lorsque vous rendez publique une bibliothèque, elle est accessible de tous, même si votre profil est privé."
+bookshelf.edit.ownership: Modifier le propriétaire
+bookshelf.edit.owner: Propriétaire
+bookshelf.edit.owner.help: "Si vous changez le propriétaire de la bibliothèque, elle n'apparaîtra plus de fait dans votre profil et vous n'en aurez plus la gestion."
+bookshelf.form.create.submit: Créer la bibliothèque
+bookshelf.form.update.submit: Enregistrer les modifications
+crud.delete.%entity%: Supprimer %entity%
+crud.delete.sure: Êtes-vous sûr de supprimer cet élément ?
+books: livres
