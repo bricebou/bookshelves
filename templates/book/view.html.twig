@@ -16,6 +16,10 @@
         <div>
             {{ book.description | nl2br }}
         </div>
+
+        <div>
+            <a href="{{ path('bks_book_edit', {ulid: book.ulid}) }}" class="btn btn-primary">{% trans %}book.edit{% endtrans %}</a>
+        </div>
     </div>
 
 {% endblock %}

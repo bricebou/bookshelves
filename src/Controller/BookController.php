@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Form\BookType;
+use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,5 +21,26 @@ class BookController extends AbstractController
         return $this->render('book/view.html.twig', [
             'book' => $book,
         ]);
+    }
+
+    #[Route('/{ulid}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Book $book, Request $request, BookRepository $bookRepository): Response
+    {
+        $form = $this->createForm(BookType::class, $book);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bookRepository->save($book, true);
+
+            return $this->redirectToRoute('bks_book_view', [
+                'ulid' => $book->getUlid(),
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('book/edit.html.twig', [
+            'form' => $form,
+            'book' => $book,
+        ]);
+
     }
 }

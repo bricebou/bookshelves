@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}book.edit{% endtrans %}{% endblock %}
+
+{% block body %}
+
+    <div class="container-lg">
+        <h1>{% trans %}book.edit{% endtrans %}</h1>
+
+        <div class="row">
+            <div class="col-8">
+                {% set buttonText = 'book.form.update.submit' %}
+                {{ include("forms/edit.html.twig", {'button_label': buttonText | trans | raw}) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
