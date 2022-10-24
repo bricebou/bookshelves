@@ -1,0 +1,28 @@
+<div {{ stimulus_controller('form-modal-form') }}>
+    {{ form_start(form) }}
+
+        {{ form_row(form.title) }}
+
+        {{ form_row(form.subtitle) }}
+
+        {{ form_row(form.authors) }}
+
+        <button type="button" class="btn btn-primary btn-sm"                 data-action="form-modal-form#openModal" data-modal-url="{{ path('bks_author_create') }}" data-modal-title="{% trans %}author.add{% endtrans %}">Add+</button>
+
+        {{ form_row(form.publisher) }}
+
+        <button type="button" class="btn btn-primary btn-sm"                 data-action="form-modal-form#openModal" data-modal-url="{{ path('bks_publisher_create') }}" data-modal-title="{% trans %}publisher.add{% endtrans %}">Add+</button>
+
+        {{ form_row(form.publication_date) }}
+
+        {{ form_row(form.description) }}
+
+        {{ form_row(form.isbn) }}
+
+        {{ form_row(form.pages) }}
+
+        <button type="submit" id="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+    {{ include("modal.html.twig") }}
+</div>

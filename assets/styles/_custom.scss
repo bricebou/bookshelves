@@ -49,3 +49,8 @@
 .user-anonymous .user__icon {
     mask: url(../images/user-regular.svg) no-repeat center;
 }
+
+/* MODAL */
+.modal-body form button {
+    display: none;
+}
