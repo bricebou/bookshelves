@@ -10,6 +10,8 @@
             <div class="bookshelf-actions d-flex gap-3">
                 <a href="{{ path('bks_bookshelf_edit', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">{% trans %}bookshelf.edit{% endtrans %}</a>
 
+                <a href="{{ path('bks_book_create', {'bksid': bookshelf.ulid}) }}" class="btn btn-primary">{% trans %}book.create{% endtrans %}</a>
+
                 <a href="{{ path('bks_bookshelf_edit_ownership', {ulid: bookshelf.ulid}) }}" class="btn btn-primary">{% trans %}bookshelf.edit.ownership{% endtrans %}</a>
 
                 {{ include('forms/delete.html.twig', {route: path('bks_bookshelf_delete', {ulid: bookshelf.ulid}), csrf_prefix: 'bookshelf', csrf: bookshelf.ulid}) }}
