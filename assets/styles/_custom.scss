@@ -54,3 +54,17 @@
 .modal-body form button {
     display: none;
 }
+
+/* HOMEPAGE */
+.bg-ccchaos {
+    display: inline-block;
+    mask: url(../images/ccchaos.svg) no-repeat center;
+    height: 100%;
+    max-width: 100%;
+    background-color: $primary;
+}
+
+/* UTILITIES */
+.min-vh-50 {
+    min-height: 50vh;
+}
