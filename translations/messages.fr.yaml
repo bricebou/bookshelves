@@ -11,18 +11,27 @@ auth.login.title: Connexion
 auth.logout.title: Déconnexion
 page.profile.title: Profil
 page.profile.title.%name%: 'Profil de %name%'
-bookshelf: la bibliothèque
-bookshelf.create: Créer une bibliothèque
-bookshelf.edit: Modifier la bibliothèque
+bookshelf: 'la bibliothèque'
+bookshelf.create: 'Créer une bibliothèque'
+bookshelf.edit: 'Modifier la bibliothèque'
 bookshelf.edit.name: Nom
 bookshelf.edit.description: Description
-bookshelf.edit.public: Publique ?
-bookshelf.edit.public.help: "Lorsque vous rendez publique une bibliothèque, elle est accessible de tous, même si votre profil est privé."
-bookshelf.edit.ownership: Modifier le propriétaire
+bookshelf.edit.public: 'Publique ?'
+bookshelf.edit.public.help: 'Lorsque vous rendez publique une bibliothèque, elle est accessible de tous, même si votre profil est privé.'
+bookshelf.edit.ownership: 'Modifier le propriétaire'
 bookshelf.edit.owner: Propriétaire
 bookshelf.edit.owner.help: "Si vous changez le propriétaire de la bibliothèque, elle n'apparaîtra plus de fait dans votre profil et vous n'en aurez plus la gestion."
-bookshelf.form.create.submit: Créer la bibliothèque
-bookshelf.form.update.submit: Enregistrer les modifications
-crud.delete.%entity%: Supprimer %entity%
-crud.delete.sure: Êtes-vous sûr de supprimer cet élément ?
+bookshelf.form.create.submit: 'Créer la bibliothèque'
+bookshelf.form.update.submit: 'Enregistrer les modifications'
+crud.delete.%entity%: 'Supprimer %entity%'
+crud.delete.sure: 'Êtes-vous sûr de supprimer cet élément ?'
 books: livres
+author.create: 'Créer un auteur'
+book.create: 'Ajouter un livre'
+book.edit: 'Éditer le livre'
+author.add: 'Ajouter un auteur'
+publisher.add: 'Ajouter un éditeur'
+publisher.create: 'Créer un éditeur'
+book: 'le livre'
+book.form.create.submit: 'Créer le livre'
+book.form.update.submit: 'Enregistrer le livre'

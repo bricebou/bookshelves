@@ -11,11 +11,11 @@
 
         {{ form_row(form.authors) }}
 
-        <button type="button" class="btn btn-primary btn-sm"                 data-action="form-modal-form#openModal" data-modal-url="{{ path('bks_author_create') }}" data-modal-title="{% trans %}author.add{% endtrans %}">Add+</button>
+        <button type="button" class="btn btn-primary btn-sm"                 data-action="form-modal-form#openModal" data-modal-url="{{ path('bks_author_create') }}" data-modal-title="{% trans %}author.add{% endtrans %}">{% trans %}author.add{% endtrans %}</button>
 
         {{ form_row(form.publisher) }}
 
-        <button type="button" class="btn btn-primary btn-sm"                 data-action="form-modal-form#openModal" data-modal-url="{{ path('bks_publisher_create') }}" data-modal-title="{% trans %}publisher.add{% endtrans %}">Add+</button>
+        <button type="button" class="btn btn-primary btn-sm"                 data-action="form-modal-form#openModal" data-modal-url="{{ path('bks_publisher_create') }}" data-modal-title="{% trans %}publisher.add{% endtrans %}">{% trans %}publisher.add{% endtrans %}</button>
 
         {{ form_row(form.publication_date) }}
 
