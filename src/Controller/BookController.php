@@ -15,8 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookController extends AbstractController
 {
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
-    public function create(Request $request, BookRepository $bookRepository, BookshelfRepository $bookshelfRepository): Response
-    {
+    public function create(
+        Request $request,
+        BookRepository $bookRepository,
+        BookshelfRepository $bookshelfRepository
+    ): Response {
         $this->denyAccessUnlessGranted('edit', $this->getUser());
 
         $bookshelf = $bookshelfRepository->findOneBy(['ulid' => $request->query->get('bksid')]) ?? null;
@@ -72,6 +75,5 @@ class BookController extends AbstractController
             'form' => $form,
             'book' => $book,
         ]);
-
     }
 }

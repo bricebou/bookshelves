@@ -19,7 +19,7 @@ class AuthorAutocompleteField extends AbstractType
             'placeholder' => 'Choose a Author',
             'choice_label' => 'name',
             'multiple' => true,
-            'query_builder' => function(AuthorRepository $authorRepository) {
+            'query_builder' => function (AuthorRepository $authorRepository) {
                 return $authorRepository->createQueryBuilder('author');
             },
             //'security' => 'ROLE_SOMETHING',

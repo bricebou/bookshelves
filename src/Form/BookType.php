@@ -28,7 +28,7 @@ class BookType extends AbstractType
             ->add('bookshelf', EntityType::class, [
                 'class' => Bookshelf::class,
                 'choice_label' => 'name',
-                'query_builder' => function(BookshelfRepository $bookshelfRepository) {
+                'query_builder' => function (BookshelfRepository $bookshelfRepository) {
                     return $bookshelfRepository->createQueryBuilder('bookshelf')
                         ->where('bookshelf.owner = :owner')
                         ->setParameter('owner', $this->security->getUser())

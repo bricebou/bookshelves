@@ -19,7 +19,7 @@ class PublisherAutocompleteField extends AbstractType
             'placeholder' => 'Choose a Publisher',
             'choice_label' => 'name',
 
-            'query_builder' => function(PublisherRepository $publisherRepository) {
+            'query_builder' => function (PublisherRepository $publisherRepository) {
                 return $publisherRepository->createQueryBuilder('publisher');
             },
             //'security' => 'ROLE_SOMETHING',

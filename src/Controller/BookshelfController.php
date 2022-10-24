@@ -109,6 +109,8 @@ class BookshelfController extends AbstractController
             $bookshelfRepository->remove($bookshelf, true);
         }
 
-        return $this->redirectToRoute('bks_profile_view', ['username' => $this->getUser()->getUserIdentifier()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('bks_profile_view', [
+            'username' => $this->getUser()->getUserIdentifier()
+        ], Response::HTTP_SEE_OTHER);
     }
 }
