@@ -12,6 +12,12 @@
                 {% set buttonText = 'book.form.update.submit' %}
                 {{ include("book/_edit.html.twig", {'button_label': buttonText | trans | raw}) }}
             </div>
+
+            {% if is_granted('edit', book.bookshelf) %}
+                <div class="col-3 offset-1 text-end">
+                    {{ include('forms/delete.html.twig', {route: path('bks_book_delete', {ulid: book.ulid}), csrf_prefix: 'book', csrf: book.ulid}) }}
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

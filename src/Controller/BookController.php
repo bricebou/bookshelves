@@ -44,7 +44,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/{ulid}', name: 'view')]
+    #[Route('/{ulid}', name: 'view', methods: ['GET'])]
     public function view(Book $book): Response
     {
         $this->denyAccessUnlessGranted('view', $book->getBookshelf());
@@ -75,5 +75,20 @@ class BookController extends AbstractController
             'form' => $form,
             'book' => $book,
         ]);
+    }
+
+    #[Route('/{ulid}', name: 'delete', methods: ['POST'])]
+    public function delete(
+        Request $request,
+        Book $book,
+        BookRepository $bookRepository
+    ): Response {
+        if ($this->isCsrfTokenValid('deletebook' . $book->getUlid(), $request->request->get('_token'))) {
+            $bookRepository->remove($book, true);
+        }
+
+        return $this->redirectToRoute('bks_bookshelf_view', [
+            'ulid' => $book->getBookshelf()->getUlid()
+        ], Response::HTTP_SEE_OTHER);
     }
 }
