@@ -60,8 +60,8 @@ class BookController extends AbstractController
         $this->denyAccessUnlessGranted('edit', $book->getBookshelf());
 
         $form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
         $form->remove('bookshelf');
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $bookRepository->save($book, true);
