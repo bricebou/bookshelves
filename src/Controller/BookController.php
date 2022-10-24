@@ -26,6 +26,8 @@ class BookController extends AbstractController
     #[Route('/{ulid}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Book $book, Request $request, BookRepository $bookRepository): Response
     {
+        $this->denyAccessUnlessGranted('edit', $book->getBookshelf());
+
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
