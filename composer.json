@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "google/apiclient": "^2.12.1",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.11",
         "sensio/framework-extra-bundle": "^6.1",
@@ -89,7 +90,8 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -99,7 +101,10 @@
             "allow-contrib": false,
             "require": "6.1.*",
             "docker": true
-        }
+        },
+        "google/apiclient-services": [
+            "Books"
+        ]
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
