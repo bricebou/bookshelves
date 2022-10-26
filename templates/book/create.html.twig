@@ -8,6 +8,11 @@
 
         <div class="row">
             <div class="col-8">
+
+                {{ form_start(isbn_form) }}
+                    {{ form_widget(isbn_form) }}
+                {{ form_end(isbn_form) }}
+
                 {% set buttonText = 'book.form.create.submit' %}
                 {{ include("book/_edit.html.twig", {'button_label': buttonText | trans | raw}) }}
             </div>

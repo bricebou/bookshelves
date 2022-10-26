@@ -6,14 +6,14 @@ use App\Entity\Author;
 use App\Entity\Book;
 use App\Entity\Publisher;
 use App\Form\BookType;
+use App\Form\IsbnType;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use App\Repository\BookshelfRepository;
 use App\Repository\PublisherRepository;
-use Google\Service\Books;
-use Google_Client;
+use App\Utils\GoogleBooksApiUtils;
+use Nicebooks\Isbn\IsbnTools;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,22 +22,78 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookController extends AbstractController
 {
     #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
-    public function create(
+    public function new(
         Request $request,
-        BookRepository $bookRepository,
-        BookshelfRepository $bookshelfRepository
+        BookshelfRepository $bookshelfRepository,
+        AuthorRepository $authorRepository,
+        PublisherRepository $publisherRepository,
+        BookRepository $bookRepository
     ): Response {
         $this->denyAccessUnlessGranted('edit', $this->getUser());
 
-        $bookshelf = $bookshelfRepository->findOneBy(['ulid' => $request->query->get('bksid')]) ?? null;
-
         $book = new Book();
-        $book->setBookshelf($bookshelf);
 
-        $form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
+        // Retrieving the Bookshelf passed along the request
+        // and associating it to the Book
+        if ($request->query->get('bksid')) {
+            $bookshelf = $bookshelfRepository->findOneBy(['ulid' => $request->query->get('bksid')]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $book->setBookshelf($bookshelf);
+        }
+
+
+        // Dealing with the ISBN form
+        $isbnForm = $this->createForm(IsbnType::class);
+        $isbnForm->handleRequest($request);
+
+        if ($isbnForm->isSubmitted() && $isbnForm->isValid()) {
+            $isbnTools = new IsbnTools();
+            $isbn = $isbnTools->format($isbnForm->getData()['isbn']);
+
+            $book->setIsbn($isbn);
+
+            // Getting book's details from the Google Books API using the ISBN
+            $gbapi = new GoogleBooksApiUtils();
+            $details = $gbapi->gettingVolumeInfoByIsbn($isbn);
+
+            $book->setTitle($details->getTitle());
+            $book->setSubtitle($details->getSubtitle());
+            $book->setDescription($details->getDescription());
+            $book->setPages($details->getPageCount());
+            $book->setPublicationDate(substr($details->getPublishedDate(), 0, 4));
+
+            if ($details->getPublisher()) {
+                $publisher = $publisherRepository->findOneBy(['name' => $details->getPublisher()]);
+
+                if (!$publisher) {
+                    $publisher = new Publisher();
+                    $publisher->setName($details->getPublisher());
+
+                    $publisherRepository->save($publisher, true);
+                }
+
+                $book->setPublisher($publisher);
+            }
+
+            foreach ($details->getAuthors() ?? [] as $dga) {
+                $author = $authorRepository->findOneBy(['name' => $dga]);
+
+                if (!$author) {
+                    $author = new Author();
+                    $author->setName($dga);
+
+                    $authorRepository->save($author, true);
+                }
+
+                $book->addAuthor($author);
+            }
+        }
+
+        // Dealing with the main form, dealing with the Book entity
+        $bookForm = $this->createForm(BookType::class, $book);
+        $bookForm->handleRequest($request);
+
+        if ($bookForm->isSubmitted() && $bookForm->isValid()) {
             $bookRepository->save($book, true);
 
             return $this->redirectToRoute('bks_book_view', [
@@ -46,83 +102,9 @@ class BookController extends AbstractController
         }
 
         return $this->renderForm('book/create.html.twig', [
-            'form' => $form,
+            'isbn_form' => $isbnForm,
+            'form' => $bookForm,
             'book' => $book
-        ]);
-    }
-
-    #[Route('/isbn', name: 'isbn', methods: ['GET'])]
-    public function isbn(): Response
-    {
-        $form = $this->createFormBuilder()
-            ->add('isbn', TextType::class)
-            ->getForm();
-
-        return $this->renderForm('book/isbn.html.twig', [
-            'form' => $form
-        ]);
-    }
-
-    #[Route('/isbn', name: 'isbn_lookup', methods: ['POST'])]
-    public function isbnLookup(
-        Request $request,
-        PublisherRepository $publisherRepository,
-        AuthorRepository $authorRepository,
-        BookRepository $bookRepository
-    ): Response {
-        $isbn = $request->query->get('isbn');
-
-        $client = new Google_Client();
-        $client->setApplicationName("Bookshelves Symfony Learning");
-        $service = new Books($client);
-
-        $result = $service->volumes->listVolumes("isbn: $isbn")->offsetGet(0);
-
-        $book = new Book();
-
-        foreach ($result->volumeInfo->authors as $name) {
-            if (!$authorRepository->findOneBy(['name' => $name])) {
-                $author = new Author();
-                $author->setName($name);
-
-                $authorRepository->save($author, true);
-            }
-
-            $book->addAuthor($authorRepository->findOneBy(['name' => $name]));
-        }
-
-        $publisher = $publisherRepository->findOneBy(['name' => $result->volumeInfo->publisher]) ?? null;
-
-        if (!$publisher) {
-            $publisher = new Publisher();
-            $publisher->setName($result->volumeInfo->publisher);
-
-            $publisherRepository->save($publisher, true);
-        }
-        $book->setPublisher($publisher);
-
-        $book->setDescription($result->volumeInfo->description)
-            ->setIsbn($isbn)
-            ->setPages($result->volumeInfo->pageCount)
-            ->setPublicationDate(substr($result->volumeInfo->publishedDate, 0, 4))
-            ->setSubtitle($result->volumeInfo->subtitle)
-            ->setTitle($result->volumeInfo->title);
-
-        $form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $bookRepository->save($book, true);
-
-            return $this->redirectToRoute('bks_book_view', [
-                'ulid' => $book->getUlid()
-            ], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('book/_edit.html.twig', [
-            'book' => $book,
-            'result' => $result,
-            'form' => $form,
         ]);
     }
 
