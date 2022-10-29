@@ -7,14 +7,19 @@
         <h1>{% trans %}book.create{% endtrans %}</h1>
 
         <div class="row">
-            <div class="col-8">
-
-                {{ form_start(isbn_form) }}
-                    {{ form_widget(isbn_form) }}
-                {{ form_end(isbn_form) }}
-
+            <div class="col-7">
                 {% set buttonText = 'book.form.create.submit' %}
-                {{ include("book/_edit.html.twig", {'button_label': buttonText | trans | raw}) }}
+                {{ include("forms/_book.html.twig", {'button_label': buttonText | trans | raw}) }}
+            </div>
+
+            <div class="col-4 offset-1">
+                <h2>Recherche ISBN</h2>
+                {{ include("forms/_isbn.html.twig") }}
+
+                <h3>Scan ISBN</h3>
+
+                <div id="isbn-reader"></div>
+
             </div>
         </div>
     </div>
