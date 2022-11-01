@@ -12,6 +12,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class BookType extends AbstractType
 {
@@ -43,6 +45,9 @@ class BookType extends AbstractType
             ->add('description')
             ->add('isbn')
             ->add('pages')
+            ->add('imageFile', VichImageType::class, [
+                'required' => false
+            ])
         ;
     }
 
