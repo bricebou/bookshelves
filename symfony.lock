@@ -249,6 +249,15 @@
             "config/packages/security.yaml"
         ]
     },
+    "symfony/stimulus-bundle": {
+        "version": "2.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.8",
+            "ref": "9e33a8a3794b603fb4be6c04ee5ecab901ce549e"
+        }
+    },
     "symfony/translation": {
         "version": "6.1",
         "recipe": {
@@ -276,12 +285,12 @@
         ]
     },
     "symfony/ux-autocomplete": {
-        "version": "2.4",
+        "version": "2.9",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "2.2",
-            "ref": "f8fa49e4547904ab278c100564ae1102df774243"
+            "version": "2.6",
+            "ref": "07d9602b7231ba355f484305d6cea58310c01741"
         },
         "files": [
             "config/routes/ux_autocomplete.yaml"
